@@ -1,0 +1,12 @@
+/**
+ * Block: Audio
+ */
+
+.wp-block-audio {
+	padding: 0;
+	margin: 0;
+}
+.wp-block-audio audio {
+	width: 100%;
+	min-width: 300px;
+}

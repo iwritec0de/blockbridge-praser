@@ -1,0 +1,119 @@
+{
+	"name": "@iwritec0de/blockbridge-react",
+	"version": "1.0.0",
+	"description": "Render WordPress Gutenberg blocks as React components",
+	"keywords": [
+		"WordPress",
+		"Gutenberg",
+		"blocks",
+		"React",
+		"headless",
+		"block-editor"
+	],
+	"license": "GPL-3.0-or-later",
+	"publishConfig": {
+		"access": "public"
+	},
+	"author": "Chris Kelley (https://github.com/iwritec0de)",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/iwritec0de/blockbridge-react.git"
+	},
+	"bugs": {
+		"url": "https://github.com/iwritec0de/blockbridge-react/issues"
+	},
+	"homepage": "https://github.com/iwritec0de/blockbridge-react#readme",
+	"engines": {
+		"node": ">=20.0.0"
+	},
+	"sideEffects": [
+		"*.css"
+	],
+	"main": "lib/index.js",
+	"module": "lib/esm/index.js",
+	"types": "lib/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./lib/index.d.ts",
+			"import": "./lib/esm/index.js",
+			"require": "./lib/index.js",
+			"default": "./lib/index.js"
+		},
+		"./style.css": "./lib/style.css"
+	},
+	"files": [
+		"lib/*.js",
+		"lib/*.d.ts",
+		"lib/components/**",
+		"lib/Utils/**",
+		"lib/esm/package.json",
+		"lib/esm/*.js",
+		"lib/esm/components/**",
+		"lib/esm/Utils/**",
+		"lib/types/**",
+		"lib/style.css",
+		"CHANGELOG.md",
+		"LICENSE"
+	],
+	"scripts": {
+		"dev": "cross-env NODE_ENV=development webpack-dev-server --mode development --open --config ./webpack/webpack.config.dev.js",
+		"prebuild": "rm -rf lib",
+		"build": "cross-env NODE_ENV=production babel src --out-dir lib --extensions '.ts,.tsx,.js,.jsx' --ignore 'src/__tests__/**','src/__mocks__/**' && cross-env NODE_ENV=production BABEL_ESM=true babel src --out-dir lib/esm --extensions '.ts,.tsx,.js,.jsx' --ignore 'src/__tests__/**','src/__mocks__/**' && tsc -p tsconfig.build.json && cat ./src/css/tokens.css ./src/css/base.css ./src/css/blocks/theme.css ./src/css/blocks/button.css ./src/css/blocks/columns.css ./src/css/blocks/cover.css ./src/css/blocks/file.css ./src/css/blocks/gallery.css ./src/css/blocks/heading.css ./src/css/blocks/media-text.css ./src/css/blocks/paragraph.css ./src/css/blocks/pullquote.css ./src/css/blocks/separator.css ./src/css/blocks/social-links.css ./src/css/blocks/spacer.css ./src/css/blocks/table.css ./src/css/blocks/text-columns.css ./src/css/blocks/verse.css ./src/css/blocks/audio.css ./src/css/blocks/video.css ./src/css/blocks/subhead.css > ./lib/style.css && node scripts/postbuild-esm.mjs",
+		"test": "jest",
+		"test:watch": "jest --watch",
+		"typecheck": "tsc --noEmit",
+		"lint": "eslint src/ --max-warnings 0",
+		"format": "prettier --write src/",
+		"prepublishOnly": "pnpm lint && pnpm build && pnpm test",
+		"demo": "bash demo/launch.sh",
+		"demo:down": "cd demo && docker compose down -v",
+		"docs:dev": "vitepress dev docs",
+		"docs:build": "vitepress build docs",
+		"docs:preview": "vitepress preview docs"
+	},
+	"peerDependencies": {
+		"react": ">=18.0.0",
+		"react-dom": ">=18.0.0"
+	},
+	"dependencies": {
+		"classnames": "^2.5.1",
+		"html-react-parser": "^6.0.0",
+		"lodash.merge": "^4.6.2"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.28.6",
+		"@babel/core": "^7.29.0",
+		"@babel/plugin-transform-react-constant-elements": "^7.27.1",
+		"@babel/plugin-transform-react-inline-elements": "^7.27.1",
+		"@babel/preset-env": "^7.29.2",
+		"@babel/preset-react": "^7.28.5",
+		"@babel/preset-typescript": "^7.28.5",
+		"@eslint/js": "^9.0.0",
+		"@testing-library/jest-dom": "^6.9.1",
+		"@testing-library/react": "^16.3.2",
+		"@types/lodash.merge": "^4.6.9",
+		"@types/react": "^19.2.14",
+		"@types/react-dom": "^19.2.3",
+		"@typescript-eslint/parser": "^8.58.0",
+		"babel-jest": "^30.3.0",
+		"babel-loader": "^10.1.1",
+		"cross-env": "^10.1.0",
+		"css-loader": "^7.1.4",
+		"eslint": "^9.0.0",
+		"eslint-plugin-react": "^7.37.5",
+		"globals": "^17.4.0",
+		"html-webpack-plugin": "^5.6.6",
+		"identity-obj-proxy": "^3.0.0",
+		"jest": "^30.3.0",
+		"jest-environment-jsdom": "^30.3.0",
+		"prettier": "^3.8.1",
+		"react": "^19.2.4",
+		"react-dom": "^19.2.4",
+		"style-loader": "^4.0.0",
+		"typescript": "^6.0.2",
+		"vitepress": "^1.6.4",
+		"webpack": "^5.105.4",
+		"webpack-cli": "^7.0.2",
+		"webpack-dev-server": "^5.2.3"
+	}
+}

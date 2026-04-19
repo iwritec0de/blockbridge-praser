@@ -1,0 +1,55 @@
+# Next.js demo site for BlockBridge.
+# Build context is the praser root so the file:../.. dependency resolves.
+#
+# Multi-stage build:
+#   1. deps   — install the praser library + site deps
+#   2. runner — lean production image
+
+# ── Stage 1: install deps and build ──────────────────────────
+FROM node:20-alpine AS deps
+
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+WORKDIR /app
+
+# Copy the praser package.json + lockfile so pnpm install caches well,
+# then the full source so the library can be built.
+COPY package.json pnpm-lock.yaml ./
+COPY babel.config.js tsconfig.json tsconfig.build.json ./
+COPY src/ ./src/
+
+# Install praser deps and build the library (produces lib/)
+RUN pnpm install --frozen-lockfile && pnpm build
+
+# Now set up the demo site.
+# Rewrite the file:../.. dependency to point to /app (the built library).
+WORKDIR /app/demo/site
+COPY demo/site/package.json ./
+RUN sed -i 's|"file:../.."| "file:/app"|' package.json
+
+# Install site deps — the file: ref now resolves to the built library at /app.
+RUN pnpm install --no-frozen-lockfile
+
+# Copy the rest of the site source
+COPY demo/site/ ./
+
+# ── Stage 2: production runner ───────────────────────────────
+FROM node:20-alpine AS runner
+
+WORKDIR /app/demo/site
+
+# Copy everything needed to run `next dev` (or `next start` after build)
+COPY --from=deps /app/demo/site ./
+COPY --from=deps /app/demo/site/node_modules ./node_modules
+
+# The file: dependency created a symlink in node_modules — copy the built
+# library so the symlink target exists.
+COPY --from=deps /app/lib /app/lib
+COPY --from=deps /app/package.json /app/package.json
+COPY --from=deps /app/src/css /app/src/css
+
+EXPOSE 3000
+
+# Run in dev mode so SSR picks up WP_INTERNAL_URL at runtime.
+# For production, switch to `next build && next start`.
+CMD ["npx", "next", "dev", "-p", "3000", "-H", "0.0.0.0"]

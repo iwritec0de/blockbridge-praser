@@ -1,0 +1,9 @@
+/**
+ * Block: Verse
+ */
+
+pre.wp-block-verse {
+	white-space: pre-wrap;
+	overflow: auto;
+	font-family: inherit;
+}

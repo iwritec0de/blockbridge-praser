@@ -1,0 +1,41 @@
+/**
+ * Block: Paragraph
+ */
+
+.is-small-text {
+	font-size: var(--bb-font-size-sm);
+}
+.is-regular-text {
+	font-size: var(--bb-font-size-base);
+}
+.is-large-text {
+	font-size: var(--bb-font-size-xl);
+}
+.is-larger-text {
+	font-size: var(--bb-font-size-3xl);
+}
+
+.has-drop-cap:not(:focus)::first-letter {
+	float: left;
+	font-size: 3.375em;
+	line-height: 0.68;
+	font-weight: 100;
+	margin: 0.05em 0.1em 0 0;
+	text-transform: uppercase;
+	font-style: normal;
+}
+
+.has-drop-cap:not(:focus)::after {
+	content: '';
+	display: table;
+	clear: both;
+	padding-top: var(--bb-block-padding);
+}
+
+p.has-background {
+	padding: calc(var(--bb-block-padding) + var(--bb-block-spacing) + 2px) calc(28px + 2px);
+}
+
+p.has-text-color a {
+	color: inherit;
+}

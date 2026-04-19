@@ -1,0 +1,123 @@
+/**
+ * BlockBridge Design Tokens
+ *
+ * All customizable values are defined here as CSS custom properties.
+ * Consumers can override any token by setting the corresponding
+ * custom property on a parent element or :root.
+ *
+ * Example:
+ *   .my-wrapper {
+ *     --bb-color-text: #333;
+ *     --bb-font-size-base: 18px;
+ *   }
+ */
+
+:root {
+	/* ------------------------------------------------
+   * Colors — Grays (WordPress Gutenberg palette)
+   * ------------------------------------------------ */
+	--bb-color-black: #000;
+	--bb-color-white: #fff;
+
+	/* Dark grays */
+	--bb-color-gray-900: #191e23;
+	--bb-color-gray-800: #23282d;
+	--bb-color-gray-700: #32373c;
+	--bb-color-gray-600: #40464d;
+	--bb-color-gray-500: #555d66;
+	--bb-color-gray-400: #606a73;
+	--bb-color-gray-300: #6c7781;
+	--bb-color-gray-200: #7e8993;
+	--bb-color-gray-150: #8d96a0;
+	--bb-color-gray-100: #8f98a1;
+
+	/* Light grays */
+	--bb-color-light-900: #a2aab2;
+	--bb-color-light-800: #b5bcc2;
+	--bb-color-light-700: #ccd0d4;
+	--bb-color-light-600: #d7dade;
+	--bb-color-light-500: #e2e4e7;
+	--bb-color-light-400: #e8eaeb;
+	--bb-color-light-300: #edeff0;
+	--bb-color-light-200: #f3f4f5;
+	--bb-color-light-100: #f8f9f9;
+
+	/* Semantic colors */
+	--bb-color-text: #191e23;
+	--bb-color-text-light: #555d66;
+	--bb-color-text-muted: #6c7781;
+	--bb-color-bg: #fff;
+	--bb-color-border: #e2e4e7;
+	--bb-color-primary: #0693e3;
+	--bb-color-primary-dark: #007cba;
+
+	/* Alert colors */
+	--bb-color-alert-yellow: #f0b849;
+	--bb-color-alert-red: #d94f4f;
+	--bb-color-alert-green: #4ab866;
+
+	/* ------------------------------------------------
+   * Typography
+   * ------------------------------------------------ */
+	--bb-font-family:
+		-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell,
+		'Helvetica Neue', sans-serif;
+	--bb-font-family-serif: 'Noto Serif', serif;
+	--bb-font-family-mono: Menlo, Consolas, monaco, monospace;
+
+	--bb-font-size-xs: 13px;
+	--bb-font-size-sm: 14px;
+	--bb-font-size-base: 16px;
+	--bb-font-size-md: 20px;
+	--bb-font-size-lg: 28px;
+	--bb-font-size-xl: 36px;
+	--bb-font-size-2xl: 42px;
+	--bb-font-size-3xl: 48px;
+
+	--bb-line-height: 1.8;
+	--bb-line-height-tight: 1.4;
+
+	/* ------------------------------------------------
+   * Spacing
+   * ------------------------------------------------ */
+	--bb-spacing-xs: 4px;
+	--bb-spacing-sm: 8px;
+	--bb-spacing-md: 16px;
+	--bb-spacing-lg: 24px;
+	--bb-spacing-xl: 28px;
+	--bb-spacing-2xl: 32px;
+
+	/* Block-specific spacing */
+	--bb-block-margin: 28px;
+	--bb-block-padding: 14px;
+	--bb-block-spacing: 4px;
+
+	/* ------------------------------------------------
+   * Layout
+   * ------------------------------------------------ */
+	--bb-content-width: 610px;
+
+	/* ------------------------------------------------
+   * Borders & Radii
+   * ------------------------------------------------ */
+	--bb-border-width: 1px;
+	--bb-border-color: #e2e4e7;
+	--bb-radius-sm: 2px;
+	--bb-radius-md: 4px;
+	--bb-radius-pill: 9999px;
+	--bb-radius-round: 50%;
+
+	/* ------------------------------------------------
+   * Breakpoints (reference only — used in media queries)
+   * Cannot use custom properties in media queries,
+   * so these are documented here for reference.
+   *
+   * --bb-break-mobile:    480px
+   * --bb-break-small:     600px
+   * --bb-break-medium:    782px
+   * --bb-break-large:     960px
+   * --bb-break-xlarge:    1080px
+   * --bb-break-wide:      1280px
+   * --bb-break-huge:      1440px
+   * ------------------------------------------------ */
+}

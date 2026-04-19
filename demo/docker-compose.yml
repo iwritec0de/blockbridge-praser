@@ -1,0 +1,69 @@
+services:
+  db:
+    image: mariadb:11
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  wordpress:
+    build:
+      context: ../../
+      dockerfile: praser/demo/Dockerfile
+    image: blockbridge-demo-wordpress:latest
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      # Healthy once the REST API returns serializedBlocks for the home page
+      # — meaning WP is installed, the plugin is active, and seeding is done.
+      test: ["CMD-SHELL", "curl -fsS http://localhost/wp-json/wp/v2/pages?slug=home | grep -q serializedBlocks || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_DEBUG', true);
+        define('WP_DEBUG_LOG', true);
+        define('SCRIPT_DEBUG', true);
+    volumes:
+      - wp_data:/var/www/html
+
+  site:
+    build:
+      context: ..
+      dockerfile: demo/Dockerfile.site
+    image: blockbridge-demo-site:latest
+    restart: unless-stopped
+    depends_on:
+      wordpress:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    environment:
+      # Inside the Docker network the Next.js server-side fetches hit WordPress
+      # directly over the internal network. Client-side fetches go through the
+      # host-mapped port.
+      NEXT_PUBLIC_WP_URL: "http://localhost:8080"
+      WP_INTERNAL_URL: "http://wordpress:80"
+
+volumes:
+  db_data:
+  wp_data:

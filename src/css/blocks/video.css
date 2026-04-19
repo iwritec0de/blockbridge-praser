@@ -1,0 +1,20 @@
+/**
+ * Block: Video
+ */
+
+.wp-block-video {
+	margin-left: 0;
+	margin-right: 0;
+}
+.wp-block-video video {
+	width: 100%;
+	max-width: 100%;
+}
+@supports (position: sticky) {
+	.wp-block-video [poster] {
+		object-fit: cover;
+	}
+}
+.wp-block-video.aligncenter {
+	text-align: center;
+}
